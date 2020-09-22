@@ -1,0 +1,17 @@
+[package]
+name = "skeleton-sprint-launcher"
+version = "0.0.0"
+authors = [ "adumbidiot <nathaniel.daniel23@outlook.com>" ]
+edition = "2018"
+
+[dependencies]
+ggez = "0.5.1"
+steamworks = { git = "https://github.com/Thinkofname/steamworks-rs", rev="49c9e90723ae8db3436ea1226341a7ed4b50f39a" }
+toml = "0.5.3"
+serde = { version = "1.0.101", features = [ "derive" ] }
+mint = "0.5.3"
+
+# stretch = "0.3.2"
+
+[build-dependencies]
+cc = "1.0.46"

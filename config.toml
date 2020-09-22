@@ -1,0 +1,10 @@
+# Workshop Sync Path
+workshop_sync_path = "./workshop"
+
+[Levelbuilder]
+# Levelbuilder Path. It should be relative in production.
+path = "C:/Program Files (x86)/Steam/steamapps/common/Skeleton Sprint/lvlbuilder/skeleton-sprint-levelbuilder.exe"
+
+[Game]
+# Game Path. It should be relative in production.
+path = "C:/Program Files (x86)/Steam/steamapps/common/Skeleton Sprint/game/Skeleton Sprint.exe"
