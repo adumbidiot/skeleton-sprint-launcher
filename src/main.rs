@@ -1,315 +1,290 @@
-//#![windows_subsystem = "windows"] //TODO: Consider feature specific for package, as release builds are helpful sometimes if perf on debug is crap
-
-mod button;
 mod config;
-mod steamworks_extra;
+pub mod steamworks_util;
+mod ui;
+mod util;
 
-use crate::{
-    button::{
-        Button,
-        ButtonBuilder,
-    },
-    config::Config,
+use crate::ui::App;
+use conrod_core::{
+    text::Font,
+    Theme,
+    UiBuilder,
 };
-use ggez::{
-    event::{
-        self,
-        EventHandler,
-        MouseButton,
-    },
-    graphics,
-    graphics::{
-        Image,
-        Text,
-    },
-    timer,
-    Context,
-    ContextBuilder,
-    GameResult,
+use glutin::Icon;
+use glutin_window::GlutinWindow;
+use image::GenericImageView;
+use piston_window::{
+    texture::UpdateTexture,
+    EventLoop,
+    G2d,
+    G2dTexture,
+    OpenGL,
+    PistonWindow,
+    Texture,
+    TextureSettings,
+    UpdateEvent,
+    Window,
+    WindowSettings,
 };
-use std::{
-    cell::RefCell,
-    collections::VecDeque,
-    path::{
-        Path,
-        PathBuf,
-    },
-    process::Command,
-    rc::Rc,
-};
-use steamworks::{
-    AppIDs,
-    AppId,
-    UGCType,
-    UserList,
-    UserListOrder,
-};
+use std::error::Error as StdError;
+use winit::BadIcon;
 
-const DESIRED_FPS: u32 = 60;
-const APP_ID: u32 = 690950;
+const COVER_IMAGE_DATA: &[u8] = include_bytes!("../assets/cover.png");
+const FONT_DATA: &[u8] = include_bytes!("../assets/fonts/bolonewt/bolonewt.ttf");
+const ICON_DATA: &[u8] = include_bytes!("../assets/icon.ico");
 
-enum Action {
-    OpenApp(PathBuf),
-}
+const WINDOW_WIDTH: u32 = 800;
+const WINDOW_HEIGHT: u32 = 600;
 
-struct ActionQueue {
-    inner: RefCell<VecDeque<Action>>,
-}
-
-impl ActionQueue {
-    pub fn new() -> Self {
-        ActionQueue {
-            inner: RefCell::new(VecDeque::new()),
-        }
-    }
-
-    pub fn push(&self, action: Action) {
-        self.inner.borrow_mut().push_back(action);
-    }
-
-    pub fn get_next(&self) -> Option<Action> {
-        self.inner.borrow_mut().pop_front()
-    }
-}
-
-pub struct LauncherState {
-    config: Config,
-    action_queue: ActionQueue,
-}
-
-impl LauncherState {
-    pub fn new(config: Config) -> Self {
-        LauncherState {
-            action_queue: ActionQueue::new(),
-            config,
-        }
-    }
-}
-
-struct SteamApi {
-    single_client: steamworks::SingleClient,
-    client: steamworks::Client,
-}
-
-impl SteamApi {
-    fn init() -> Option<Self> {
-        let (client, single_client) = steamworks::Client::init().ok()?;
-
-        Some(SteamApi {
-            client,
-            single_client,
-        })
-    }
-
-    fn init_workshop(&self, sync_dir: &Path) -> Rc<RefCell<WorkshopSyncState>> {
-        std::fs::create_dir_all(sync_dir).expect("Dir");
-
-        let steam_id = self.client.user().steam_id();
-        let query = self
-            .client
-            .ugc()
-            .query_user(
-                steam_id.account_id(),
-                UserList::Subscribed,
-                UGCType::All,
-                UserListOrder::LastUpdatedDesc,
-                AppIDs::ConsumerAppId(AppId(APP_ID)),
-                1,
-            )
-            .expect("Valid query");
-
-        let mut sync_dir = PathBuf::from(sync_dir);
-        query.fetch(move |res| {
-            res.expect("Response").iter().for_each(|el| {
-                if let Some(info) = steamworks_extra::get_item_install_info(el.published_file_id) {
-                    sync_dir.push(&el.title);
-                    sync_dir.set_extension("txt");
-                    std::fs::copy(&info.path, &sync_dir).expect("Valid copy");
-                    sync_dir.pop();
-                } else {
-                    // Failed to sync blah blah blah
-                }
-            });
-        });
-
-        Rc::new(RefCell::new(WorkshopSyncState::new()))
-    }
-
-    fn update(&self) {
-        self.single_client.run_callbacks();
-    }
-}
+const WINDOW_TITLE: &str = "Skeleton Sprint Launcher";
 
 #[derive(Debug)]
-struct WorkshopSyncState {
-    total: Option<usize>,
-    finished: Option<usize>,
+pub enum AssetError {
+    Image(image::ImageError),
+    BadIcon(BadIcon),
 }
 
-impl WorkshopSyncState {
-    pub fn new() -> WorkshopSyncState {
-        WorkshopSyncState {
-            total: None,
-            finished: None,
+impl From<image::ImageError> for AssetError {
+    fn from(e: image::ImageError) -> Self {
+        Self::Image(e)
+    }
+}
+
+impl From<BadIcon> for AssetError {
+    fn from(e: BadIcon) -> Self {
+        Self::BadIcon(e)
+    }
+}
+
+impl std::fmt::Display for AssetError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Image(e) => e.fmt(f),
+            Self::BadIcon(e) => e.fmt(f),
         }
     }
+}
 
-    #[allow(dead_code)]
-    fn is_finished(&self) -> bool {
-        self.total == self.finished
-    }
+impl StdError for AssetError {}
+
+/// Loads an image into a winit icon
+fn load_icon(icon_image_bytes: &[u8]) -> Result<Icon, AssetError> {
+    let icon_image = image::load_from_memory(icon_image_bytes)?;
+    let icon_width = icon_image.width();
+    let icon_height = icon_image.height();
+    let icon_rgba_buffer = icon_image.into_rgba().into_vec();
+    let icon = Icon::from_rgba(icon_rgba_buffer, icon_width, icon_height)?;
+    Ok(icon)
+}
+
+/// Makes a PistonWindow
+/// TODO: Add more configurable options and make more generic
+fn make_piston_window(icon: Icon) -> Result<PistonWindow, Box<dyn StdError>> {
+    let title = WINDOW_TITLE;
+    let width = WINDOW_WIDTH;
+    let height = WINDOW_HEIGHT;
+    let num_samples = 4;
+    let use_vsync = true;
+    let resizable = false;
+    let is_visible = false;
+
+    // TODO: Is this multisamlping or antialiasing?
+    let samples = 0;
+
+    let window_settings = WindowSettings::new(title, [width, height])
+        .resizable(resizable)
+        .vsync(use_vsync)
+        .samples(num_samples);
+
+    let events_loop = glutin::EventsLoop::new();
+    let window_builder = glutin::WindowBuilder::new()
+        .with_resizable(resizable)
+        .with_title(title)
+        .with_visibility(is_visible)
+        .with_dimensions((width, height).into())
+        .with_window_icon(Some(icon))
+        .with_multitouch();
+
+    let glutin_window = GlutinWindow::from_glutin(events_loop, window_builder, &window_settings)?;
+    let mut window = PistonWindow::new(OpenGL::V3_2, samples, glutin_window);
+
+    // Set eventloop updates
+    window.events.set_ups(60);
+
+    Ok(window)
 }
 
 fn main() {
-    let config = match config::load_from_file("./config.toml") {
-        Some(c) => c,
-        None => {
-            println!("Could not load config from ./config.toml");
+    let font = match Font::from_bytes(FONT_DATA) {
+        Ok(font) => font,
+        Err(e) => {
+            eprintln!("Failed to load font: {}", e);
             return;
         }
     };
-    println!("Loaded Config: {:#?}", config);
 
-    let steam_api = SteamApi::init();
+    let icon = match load_icon(ICON_DATA) {
+        Ok(icon) => icon,
+        Err(e) => {
+            eprintln!("Failed to load icon: {}", e);
+            return;
+        }
+    };
 
-    let (mut ctx, mut event_loop) = ContextBuilder::new("skeleton-sprint-launcher", "adumbidiot")
-        .window_setup(
-            ggez::conf::WindowSetup::default()
-                .title("Skeleton Sprint Launcher")
-                .icon("/icon.ico")
-                .vsync(true),
+    let cover_image = match image::load_from_memory(COVER_IMAGE_DATA) {
+        Ok(cover_image) => cover_image.into_rgba(),
+        Err(e) => {
+            eprintln!("Failed to load cover image: {}", e);
+            return;
+        }
+    };
+
+    let config = match crate::config::load_from_file("./config.toml") {
+        Ok(config) => config,
+        Err(e) => {
+            eprintln!("Failed to load config: {}", e);
+            return;
+        }
+    };
+
+    let mut window = match make_piston_window(icon) {
+        Ok(window) => window,
+        Err(e) => {
+            eprintln!("Failed to make a window: {}", e);
+            return;
+        }
+    };
+
+    let mut texture_context = window.create_texture_context();
+    let texture_settings = TextureSettings::new();
+
+    let cover_image =
+        match Texture::from_image(&mut texture_context, &cover_image, &texture_settings) {
+            Ok(cover_image) => cover_image,
+            Err(e) => {
+                eprintln!("Failed to load cover_image into a texture: {}", e);
+                return;
+            }
+        };
+
+    let mut image_map = conrod_core::image::Map::new();
+    let cover_image = image_map.insert(cover_image);
+
+    let mut app = match App::new(config, cover_image) {
+        Ok(app) => app,
+        Err(e) => {
+            eprintln!("Failed to init app: {}", e);
+            return;
+        }
+    };
+
+    let mut ui = UiBuilder::new([WINDOW_WIDTH.into(), WINDOW_HEIGHT.into()])
+        .theme(Theme::default())
+        .build();
+    ui.clear_with(conrod_core::color::Color::Rgba(0.0, 0.0, 0.0, 1.0));
+    // ui.set_num_redraw_frames(10);
+
+    let ids = self::ui::Ids::new(ui.widget_id_generator());
+    ui.fonts.insert(font);
+
+    let mut text_vertex_data = Vec::new();
+    let (mut glyph_cache, mut text_texture_cache) = {
+        const SCALE_TOLERANCE: f32 = 0.1;
+        const POSITION_TOLERANCE: f32 = 0.1;
+
+        let cache = conrod_core::text::GlyphCache::builder()
+            .dimensions(WINDOW_WIDTH, WINDOW_HEIGHT)
+            .scale_tolerance(SCALE_TOLERANCE)
+            .position_tolerance(POSITION_TOLERANCE)
+            .build();
+
+        let buffer_len = WINDOW_WIDTH as usize * WINDOW_HEIGHT as usize;
+        let init = vec![128; buffer_len];
+
+        let settings = TextureSettings::new();
+        let texture = G2dTexture::from_memory_alpha(
+            &mut texture_context,
+            &init,
+            WINDOW_WIDTH,
+            WINDOW_HEIGHT,
+            &settings,
         )
-        .window_mode(ggez::conf::WindowMode::default().maximized(false))
-        .add_resource_path("./resources")
-        .build()
-        .expect("Context");
+        .expect("Valid texture");
 
-    let mut state = State::new(&mut ctx, steam_api, config);
+        (cache, texture)
+    };
 
-    match event::run(&mut ctx, &mut event_loop, &mut state) {
-        Ok(_) => println!("Exited cleanly."),
-        Err(e) => println!("Error occured: {}", e),
+    // Don't show the window until the first draw is complete.
+    let mut first_draw = true;
+    let mut opened_window = false;
+
+    while let Some(event) = window.next() {
+        let size = window.size();
+        let (win_w, win_h) = (
+            size.width as conrod_core::Scalar,
+            size.height as conrod_core::Scalar,
+        );
+        if let Some(e) = conrod_piston::event::convert(event.clone(), win_w, win_h) {
+            ui.handle_event(e);
+        }
+
+        event.update(|_| {
+            app.update();
+
+            let mut ui = ui.set_widgets();
+            ui::gui(&mut ui, &ids, &mut app);
+
+            if !first_draw && !opened_window {
+                let window = window.window.ctx.window();
+                window.show();
+                opened_window = true;
+            }
+        });
+
+        window.draw_2d(&event, |context, graphics, device| {
+            // if let Some(primitives) = ui.draw_if_changed() {
+            // Force a draw here to get steam overlay to work right
+            if let Some(primitives) = Some(ui.draw()) {
+                let cache_queued_glyphs = |_graphics: &mut G2d,
+                                           cache: &mut G2dTexture,
+                                           rect: conrod_core::text::rt::Rect<u32>,
+                                           data: &[u8]| {
+                    let offset = [rect.min.x, rect.min.y];
+                    let size = [rect.width(), rect.height()];
+                    let format = piston_window::texture::Format::Rgba8;
+                    text_vertex_data.clear();
+                    text_vertex_data.extend(data.iter().flat_map(|&b| vec![255, 255, 255, b]));
+                    UpdateTexture::update(
+                        cache,
+                        &mut texture_context,
+                        format,
+                        &text_vertex_data[..],
+                        offset,
+                        size,
+                    )
+                    .expect("failed to update texture")
+                };
+
+                conrod_piston::draw::primitives(
+                    primitives,
+                    context,
+                    graphics,
+                    &mut text_texture_cache,
+                    &mut glyph_cache,
+                    &image_map,
+                    cache_queued_glyphs,
+                    texture_from_image,
+                );
+
+                texture_context.encoder.flush(device);
+
+                if first_draw {
+                    first_draw = false;
+                }
+            }
+        });
     }
 }
 
-struct State {
-    steam_api: Option<SteamApi>,
-
-    bg: Image,
-    title: Text,
-    #[allow(dead_code)]
-    workshop_state: Option<Rc<RefCell<WorkshopSyncState>>>,
-    icon: Image,
-
-    buttons: Vec<Button>,
-    launcher_state: LauncherState,
-}
-
-impl State {
-    pub fn new(ctx: &mut Context, steam_api: Option<SteamApi>, config: Config) -> Self {
-        let workshop_state = steam_api
-            .as_ref()
-            .map(|steam_api| steam_api.init_workshop(config.get_workshop_sync_path()));
-
-        let bg = Image::new(ctx, "/bg.png").unwrap();
-        let icon = Image::new(ctx, "/cover_art.png").unwrap();
-
-        let game_button = ButtonBuilder::new()
-            .text("Launch Game")
-            .dimensions([100.0, 100.0, 150.0, 50.0])
-            .key_up_handler(|state| {
-                state.action_queue.push(Action::OpenApp(
-                    state.config.get_game_config().get_path().clone(),
-                ));
-            })
-            .build(ctx)
-            .expect("button");
-
-        let builder_button = ButtonBuilder::new()
-            .text("Launch Builder")
-            .dimensions([100.0, 200.0, 150.0, 50.0])
-            .key_up_handler(|state| {
-                state.action_queue.push(Action::OpenApp(
-                    state.config.get_levelbuilder_config().get_path().clone(),
-                ));
-            })
-            .build(ctx)
-            .expect("button");
-
-        let buttons = vec![game_button, builder_button];
-
-        State {
-            steam_api,
-            bg,
-            icon,
-            title: Text::new("Skeleton Sprint Launcher"),
-            workshop_state,
-            buttons,
-            launcher_state: LauncherState::new(config),
-        }
-    }
-}
-
-impl EventHandler for State {
-    fn update(&mut self, ctx: &mut Context) -> GameResult<()> {
-        if let Some(steam_api) = self.steam_api.as_ref() {
-            steam_api.update();
-            for b in self.buttons.iter_mut() {
-                b.update(&self.launcher_state);
-            }
-
-            while let Some(a) = self.launcher_state.action_queue.get_next() {
-                match a {
-                    Action::OpenApp(p) => {
-                        println!("Opening App '{}'...", p.display());
-                        let _child = Command::new(p).spawn().expect("Launch");
-                        ctx.continuing = false;
-                    }
-                }
-            }
-        }
-        Ok(())
-    }
-
-    fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
-        while timer::check_update_time(ctx, DESIRED_FPS) {
-            graphics::clear(ctx, graphics::WHITE);
-            graphics::draw(ctx, &self.bg, graphics::DrawParam::default())?;
-            graphics::draw(
-                ctx,
-                &self.icon,
-                graphics::DrawParam::default()
-                    .dest([300.0, 100.0])
-                    .scale([0.5, 0.5]),
-            )?;
-            graphics::draw(ctx, &self.title, graphics::DrawParam::default())?;
-
-            for b in self.buttons.iter() {
-                b.draw(ctx)?;
-            }
-
-            graphics::present(ctx)?;
-        }
-        Ok(())
-    }
-
-    fn mouse_button_down_event(&mut self, _ctx: &mut Context, button: MouseButton, x: f32, y: f32) {
-        if button == MouseButton::Left {
-            for b in self.buttons.iter_mut() {
-                if b.dimensions().contains([x, y]) {
-                    b.on_keydown(&self.launcher_state);
-                }
-            }
-        }
-    }
-
-    fn mouse_button_up_event(&mut self, _ctx: &mut Context, button: MouseButton, x: f32, y: f32) {
-        if button == MouseButton::Left {
-            for b in self.buttons.iter_mut() {
-                if b.dimensions().contains([x, y]) {
-                    b.on_keyup(&self.launcher_state);
-                }
-            }
-        }
-    }
+fn texture_from_image<T>(img: &T) -> &T {
+    img
 }

@@ -1,0 +1,9 @@
+accepted = [
+    "Apache-2.0",
+    "MIT",
+    "CC0-1.0",
+    "BSD-3-Clause",
+    "ISC",
+    "BSD-2-Clause",
+    "Zlib"
+]

@@ -6,13 +6,13 @@ use std::path::{
 
 #[derive(Debug, Deserialize)]
 pub struct Config {
-    workshop_sync_path: PathBuf,
+    pub workshop_sync_path: PathBuf,
 
     #[serde(alias = "Levelbuilder")]
-    levelbuilder: LaunchConfig,
+    pub levelbuilder: LaunchConfig,
 
     #[serde(alias = "Game")]
-    game: LaunchConfig,
+    pub game: LaunchConfig,
 }
 
 impl Config {
@@ -20,28 +20,24 @@ impl Config {
         &self.workshop_sync_path
     }
 
-    pub fn get_game_config(&self) -> &LaunchConfig {
-        &self.game
+    pub fn get_game_path(&self) -> &PathBuf {
+        &self.game.path
     }
 
-    pub fn get_levelbuilder_config(&self) -> &LaunchConfig {
-        &self.levelbuilder
+    pub fn get_levelbuilder_path(&self) -> &PathBuf {
+        &self.levelbuilder.path
     }
 }
 
 #[derive(Debug, Deserialize)]
 pub struct LaunchConfig {
-    path: PathBuf,
+    pub path: PathBuf,
 }
 
-impl LaunchConfig {
-    pub fn get_path(&self) -> &PathBuf {
-        &self.path
-    }
-}
+pub fn load_from_file<T: AsRef<Path>>(path: T) -> Result<Config, std::io::Error> {
+    let path = path.as_ref();
+    let data = std::fs::read_to_string(path)?;
+    let config = toml::from_str(&data)?;
 
-pub fn load_from_file<T: AsRef<Path>>(p: T) -> Option<Config> {
-    let data = std::fs::read_to_string(p.as_ref()).ok()?;
-    let config = toml::from_str(&data).unwrap();
-    Some(config)
+    Ok(config)
 }

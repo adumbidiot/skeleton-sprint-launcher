@@ -3,15 +3,43 @@ name = "skeleton-sprint-launcher"
 version = "0.0.0"
 authors = [ "adumbidiot <nathaniel.daniel23@outlook.com>" ]
 edition = "2018"
+license = "MIT"
 
 [dependencies]
-ggez = "0.5.1"
-steamworks = { git = "https://github.com/Thinkofname/steamworks-rs", rev="49c9e90723ae8db3436ea1226341a7ed4b50f39a" }
-toml = "0.5.3"
-serde = { version = "1.0.101", features = [ "derive" ] }
-mint = "0.5.3"
+conrod_core = "0.70.0"
+conrod_piston = "0.70.0"
+glutin = "0.21.2"
+image = "0.23.9"
+libc = "0.2.77"
+parking_lot = "0.9.0"
+piston2d-graphics = "0.36.0"
+pistoncore-input = "1.0.0"
+piston_window = "0.110.0"
+serde = { version = "1.0.116", features = [ "derive" ] }
+steamworks = "0.6.1"
+toml = "0.5.6"
 
-# stretch = "0.3.2"
+# We want threaded to queue tasks on a background threadpool
+# We also want sync for oneshot support to integrate steamworks and tokio
+# fs is needed for file operations in futures
+tokio = { version = "0.2.22", features = [ "rt-threaded", "sync", "fs" ] } 
+
+pistoncore-glutin_window = "0.65.0"
+winit = "0.19.5"
 
 [build-dependencies]
 cc = "1.0.46"
+
+[patch.crates-io]
+# They refer to different crate versions on crates io
+conrod_core = { git = "https://github.com/PistonDevelopers/conrod", rev = "dc98949" }
+conrod_piston = { git = "https://github.com/PistonDevelopers/conrod", rev = "dc98949" }
+
+# Patch for building from pre-existing window + clippy fixes
+# Based on https://github.com/PistonDevelopers/glutin_window/tree/e2fdb0784ec5b1c563940da69eb70c843a0d4ef1
+pistoncore-glutin_window = { path = "lib/glutin_window" } 
+
+# Patch to make steamworks callbacks FnOnce. Needed for ease of use with futures.
+# steamworks = { git = "https://github.com/Thinkofname/steamworks-rs", rev = "8ded00a828d25e48bc0782e116c5e084cd42ecc3" }
+# Patch to make steamworks callbacks FnOnce and remove dependency on Failure. 
+steamworks = { git = "https://github.com/adumbidiot/steamworks-rs", branch = "remove-failure" }

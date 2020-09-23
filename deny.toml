@@ -1,0 +1,99 @@
+targets = [
+    { triple = "x86_64-unknown-linux-gnu" },
+    { triple = "x86_64-unknown-linux-musl" },
+    { triple = "x86_64-apple-darwin" },
+    { triple = "x86_64-pc-windows-msvc" },
+]
+
+[advisories]
+vulnerability = "deny"
+unmaintained = "deny"
+notice = "deny"
+ignore = [
+    # TODO: Investigate proper removal for stb_truetype
+    "RUSTSEC-2020-0020",
+]
+
+[licenses]
+unlicensed = "deny"
+copyleft = "deny"
+allow-osi-fsf-free = "neither"
+confidence-threshold = 0.93
+default = "deny"
+private = { ignore = true }
+allow = [ "Apache-2.0", "MIT", "ISC", "Unlicense", "Zlib", "CC0-1.0", "BSD-3-Clause" ]
+exceptions = []
+
+[[licenses.clarify]]
+name = "ring"
+expression = "MIT AND ISC AND OpenSSL"
+license-files = [
+    { path = "LICENSE", hash = 0xbd0eed23 },
+]
+
+[[licenses.clarify]]
+name = "webpki"
+expression = "ISC"
+license-files = [
+    { path = "LICENSE", hash = 0x001c7e6c },
+]
+
+[bans]
+multiple-versions = "warn"
+highlight = "all"
+skip = [
+    # Blocked on glutin being bumped, which is blocked on winit fixing high cpu usage on certain platforms. Dammit winit.
+    { name = "wayland-sys", version = "0.21.13" },
+    { name = "wayland-scanner", version = "0.21.13" },
+    { name = "wayland-protocols", version = "0.21.13" },
+    { name = "wayland-commons", version = "0.21.13" },
+    { name = "wayland-client", version = "0.21.13" },
+    { name = "unicode-xid", version = "0.1.0" },
+    { name = "smithay-client-toolkit", version = "0.4.6" },
+    { name = "rusttype", version = "0.7.9" },
+    { name = "quote", version = "0.6.13" },
+    { name = "proc-macro2", version = "0.4.30" },
+    { name = "libloading", version = "0.5.2" },
+    { name = "gl_generator", version = "0.13.1" },
+    
+    # Blocked on conrod bumping num
+    { name = "num-rational", version = "0.2.4" },
+    
+    # Blocked on png bumping miniz_oxide
+    { name = "miniz_oxide", version = "0.3.7" },
+    
+    # Blocked on pistoncore-glutin_window bumping gl
+    { name = "gl_generator", version = "0.10.0" },
+]
+
+# Mostly soundness denies since the advisory lacks a section for soundess bugs
+deny = [        
+    # https://github.com/RustSec/advisory-db/pull/293
+    # NOTE: May be sound in the future: https://github.com/RustSec/advisory-db/pull/293#issuecomment-641898680
+    { name = "rio", version = "*" },
+
+    # https://github.com/RustSec/advisory-db/issues/299
+    { name = "smallvec", version = "<0.6.13" },
+    
+    # https://github.com/RustSec/advisory-db/pull/268
+    { name = "plutonium", version = "*" },
+    
+    # https://github.com/RustSec/advisory-db/pull/308
+    { name = "traitobject", version = "*" },
+    
+    # https://github.com/RustSec/advisory-db/issues/305
+    { name = "rental", version = "*" },
+    
+    # Appears to be moving towards integrating rio more tightly for io_uring support
+    { name = "sled", version = "*" },
+]
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = [ "https://github.com/rust-lang/crates.io-index" ]
+allow-git = [
+    "https://github.com/PistonDevelopers/conrod",
+    # "https://github.com/Thinkofname/steamworks-rs",
+    "https://github.com/adumbidiot/steamworks-rs"
+]
