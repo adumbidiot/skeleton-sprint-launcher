@@ -17,6 +17,7 @@ pistoncore-input = "1.0.0"
 piston_window = "0.110.0"
 serde = { version = "1.0.116", features = [ "derive" ] }
 steamworks = "0.6.1"
+steamworks-sys = "0.6.1"
 toml = "0.5.6"
 
 # We want threaded to queue tasks on a background threadpool
@@ -27,9 +28,6 @@ tokio = { version = "0.2.22", features = [ "rt-threaded", "sync", "fs" ] }
 pistoncore-glutin_window = "0.65.0"
 winit = "0.19.5"
 
-[build-dependencies]
-cc = "1.0.46"
-
 [patch.crates-io]
 # They refer to different crate versions on crates io
 conrod_core = { git = "https://github.com/PistonDevelopers/conrod", rev = "dc98949" }
@@ -39,7 +37,6 @@ conrod_piston = { git = "https://github.com/PistonDevelopers/conrod", rev = "dc9
 # Based on https://github.com/PistonDevelopers/glutin_window/tree/e2fdb0784ec5b1c563940da69eb70c843a0d4ef1
 pistoncore-glutin_window = { path = "lib/glutin_window" } 
 
-# Patch to make steamworks callbacks FnOnce. Needed for ease of use with futures.
-# steamworks = { git = "https://github.com/Thinkofname/steamworks-rs", rev = "8ded00a828d25e48bc0782e116c5e084cd42ecc3" }
-# Patch to make steamworks callbacks FnOnce and remove dependency on Failure. 
-steamworks = { git = "https://github.com/adumbidiot/steamworks-rs", branch = "remove-failure" }
+# Patch to make steamworks callbacks FnOnce + remove dependency on Failure.
+steamworks = { git = "https://github.com/Thinkofname/steamworks-rs", rev = "6ffbe434308d33d17cae219536800f354061e7ca" }
+steamworks-sys = { git = "https://github.com/Thinkofname/steamworks-rs", rev = "6ffbe434308d33d17cae219536800f354061e7ca" }

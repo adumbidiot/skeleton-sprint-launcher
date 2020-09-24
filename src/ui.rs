@@ -243,8 +243,11 @@ impl App {
         let steam_workshop_sync_state = Arc::new(Mutex::new(SteamWorkshopSyncState::Starting));
         let steam_workshop_sync_state_clone = steam_workshop_sync_state.clone();
 
+        let steam_client_clone = steam_client.clone();
+
         tokio_rt.spawn(async move {
             if let Err(e) = sync_steam_workshop(
+                steam_client_clone,
                 ugc_query_future.await,
                 steam_workshop_sync_state_clone.clone(),
                 sync_dir,
@@ -273,6 +276,7 @@ impl App {
 }
 
 async fn sync_steam_workshop(
+    steam_client: steamworks::Client,
     workshop_data: Result<
         Result<Vec<steamworks::QueryResult>, steamworks::SteamError>,
         OneShotRecvError,
@@ -287,13 +291,14 @@ async fn sync_steam_workshop(
         .begin_sync(workshop_data.len());
 
     for workshop_item in workshop_data.iter() {
-        let published_file_id = workshop_item.published_file_id;
-        let maybe_item_info = crate::steamworks_util::get_item_install_info(published_file_id);
-        let item_info = maybe_item_info.ok_or(SteamWorkshopSyncError::MissingItemInfo)?;
+        let item_info = steam_client
+            .ugc()
+            .item_install_info(workshop_item.published_file_id)
+            .ok_or(SteamWorkshopSyncError::MissingItemInfo)?;
 
         sync_dir.push(&workshop_item.title);
         sync_dir.set_extension("txt");
-        tokio::fs::copy(&item_info.path, &sync_dir).await?;
+        tokio::fs::copy(&item_info.folder, &sync_dir).await?;
         sync_dir.pop();
 
         steam_workshop_sync_state.lock().add_synced(1);

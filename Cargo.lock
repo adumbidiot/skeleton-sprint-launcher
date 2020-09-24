@@ -1487,7 +1487,6 @@ checksum = "7fdf1b9db47230893d76faad238fd6097fd6d6a9245cd7a4d90dbd639536bbd2"
 name = "skeleton-sprint-launcher"
 version = "0.0.0"
 dependencies = [
- "cc",
  "conrod_core",
  "conrod_piston",
  "glutin",
@@ -1500,6 +1499,7 @@ dependencies = [
  "pistoncore-input",
  "serde",
  "steamworks",
+ "steamworks-sys",
  "tokio",
  "toml",
  "winit",
@@ -1569,7 +1569,7 @@ dependencies = [
 [[package]]
 name = "steamworks"
 version = "0.6.1"
-source = "git+https://github.com/adumbidiot/steamworks-rs?branch=remove-failure#0179894234c8bbb183712974c42c03ef63103726"
+source = "git+https://github.com/Thinkofname/steamworks-rs?rev=6ffbe434308d33d17cae219536800f354061e7ca#6ffbe434308d33d17cae219536800f354061e7ca"
 dependencies = [
  "bitflags",
  "lazy_static",
@@ -1581,7 +1581,7 @@ dependencies = [
 [[package]]
 name = "steamworks-sys"
 version = "0.6.1"
-source = "git+https://github.com/adumbidiot/steamworks-rs?branch=remove-failure#0179894234c8bbb183712974c42c03ef63103726"
+source = "git+https://github.com/Thinkofname/steamworks-rs?rev=6ffbe434308d33d17cae219536800f354061e7ca#6ffbe434308d33d17cae219536800f354061e7ca"
 dependencies = [
  "bindgen",
  "libc",
