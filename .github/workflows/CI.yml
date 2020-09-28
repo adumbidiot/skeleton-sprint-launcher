@@ -8,7 +8,6 @@ name: Rust
       - master
 env:
     STEAM_SDK_LOCATION: ./steamworks-sdk/steamworks_sdk_148a/sdk
-    # LIBCLANG_PATH: 
 jobs:
   lint:
     name: Lint
@@ -33,7 +32,9 @@ jobs:
             iwr -useb get.scoop.sh | iex
             echo "::add-path::$($HOME)/scoop/shims"
       - name: Install LLVM
-        run: scoop install llvm
+        run: |
+            scoop install llvm
+            echo "::set-env name=LIBCLANG_PATH::$($HOME)/scoop/apps/llvm/current/bin"
       - name: Rustfmt
         uses: actions-rs/cargo@v1
         with:
