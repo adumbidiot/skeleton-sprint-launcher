@@ -29,7 +29,9 @@ jobs:
           token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
           path: steamworks-sdk
       - name: Install Scoop
-        run: iwr -useb get.scoop.sh | iex
+        run: |
+            iwr -useb get.scoop.sh | iex
+            echo "::add-path::$($HOME)/scoop/shims"
       - name: Install LLVM
         run: scoop install llvm
       - name: Rustfmt
