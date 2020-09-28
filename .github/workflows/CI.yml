@@ -8,6 +8,7 @@ name: Rust
       - master
 env:
     STEAM_SDK_LOCATION: ./steamworks-sdk/steamworks_sdk_148a/sdk
+    # LIBCLANG_PATH: 
 jobs:
   lint:
     name: Lint
@@ -27,6 +28,10 @@ jobs:
           repository: adumbidiot/private-steamworks-sdk
           token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
           path: steamworks-sdk
+      - name: Install Scoop
+        run: iwr -useb get.scoop.sh | iex
+      - name: Install LLVM
+        run: scoop install llvm
       - name: Rustfmt
         uses: actions-rs/cargo@v1
         with:
