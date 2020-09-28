@@ -53,6 +53,8 @@ jobs:
     name: Deny
     runs-on: ubuntu-latest
     steps: 
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Deny
         uses: EmbarkStudios/cargo-deny-action@v1
   build:
