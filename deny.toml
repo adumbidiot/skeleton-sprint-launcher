@@ -39,7 +39,7 @@ license-files = [
 ]
 
 [bans]
-multiple-versions = "warn"
+multiple-versions = "deny"
 highlight = "all"
 skip = [
     # Blocked on glutin being bumped, which is blocked on winit fixing high cpu usage on certain platforms. Dammit winit.
