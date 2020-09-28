@@ -115,7 +115,7 @@ dependencies = [
  "lazycell",
  "log",
  "peeking_take_while",
- "proc-macro2 1.0.21",
+ "proc-macro2 1.0.23",
  "quote 1.0.7",
  "regex",
  "rustc-hash",
@@ -252,7 +252,7 @@ checksum = "0dbbb57365263e881e805dc77d94697c9118fd94d8da011240555aa7b23445bd"
 [[package]]
 name = "conrod_core"
 version = "0.70.0"
-source = "git+https://github.com/PistonDevelopers/conrod?rev=dc98949#dc9894949949db0efa48700b3cc86fb48e3062ac"
+source = "git+https://github.com/adumbidiot/conrod?branch=update-piston-graphics#f8838d810726c3999dd65a91f6f3fb1332c6269b"
 dependencies = [
  "conrod_derive",
  "copypasta",
@@ -267,9 +267,9 @@ dependencies = [
 [[package]]
 name = "conrod_derive"
 version = "0.70.0"
-source = "git+https://github.com/PistonDevelopers/conrod?rev=dc98949#dc9894949949db0efa48700b3cc86fb48e3062ac"
+source = "git+https://github.com/adumbidiot/conrod?branch=update-piston-graphics#f8838d810726c3999dd65a91f6f3fb1332c6269b"
 dependencies = [
- "proc-macro2 1.0.21",
+ "proc-macro2 1.0.23",
  "quote 1.0.7",
  "syn",
 ]
@@ -277,7 +277,7 @@ dependencies = [
 [[package]]
 name = "conrod_piston"
 version = "0.70.0"
-source = "git+https://github.com/PistonDevelopers/conrod?rev=dc98949#dc9894949949db0efa48700b3cc86fb48e3062ac"
+source = "git+https://github.com/adumbidiot/conrod?branch=update-piston-graphics#f8838d810726c3999dd65a91f6f3fb1332c6269b"
 dependencies = [
  "conrod_core",
  "piston2d-graphics",
@@ -660,9 +660,9 @@ dependencies = [
 
 [[package]]
 name = "hermit-abi"
-version = "0.1.15"
+version = "0.1.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3deed196b6e7f9e44a2ae8d94225d80302d81208b1bb673fd21fe634645c85a9"
+checksum = "4c30f6d0bc6b00693347368a67d41b58f2fb851215ff1da49e90fe2c5c667151"
 dependencies = [
  "libc",
 ]
@@ -835,9 +835,9 @@ dependencies = [
 
 [[package]]
 name = "memoffset"
-version = "0.5.5"
+version = "0.5.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c198b026e1bbf08a937e94c6c60f9ec4a2267f5b0d2eec9c1b21b061ce2be55f"
+checksum = "043175f069eda7b85febe4a74abbaeff828d9f8b448515d3151a14a3542811aa"
 dependencies = [
  "autocfg",
 ]
@@ -1084,15 +1084,15 @@ dependencies = [
 
 [[package]]
 name = "pin-project-lite"
-version = "0.1.7"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "282adbf10f2698a7a77f8e983a74b2d18176c19a7fd32a45446139ae7b02b715"
+checksum = "71f349a4f0e70676ffb2dbafe16d0c992382d02f0a952e3ddf584fc289dac6b3"
 
 [[package]]
 name = "piston"
-version = "0.51.0"
+version = "0.52.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "87fb12e2fe2e60e4c311bcb7a275e65ea6e0cb54e743a99943abfb704b926e5b"
+checksum = "76cb93ac01a1f5f04bed53f01881ebe13fe40860f7ca332697687aac422670a6"
 dependencies = [
  "pistoncore-event_loop",
  "pistoncore-input",
@@ -1119,9 +1119,9 @@ dependencies = [
 
 [[package]]
 name = "piston-graphics_api_version"
-version = "0.2.0"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c54f48a0072e8b2490935bc46a3ddb50ca96fdc071f675e9296063598836b7ac"
+checksum = "2c10c0d7a00f671e717ab98aa2c7f7bf204082d0e6b246827dc17b68bbaf8d18"
 
 [[package]]
 name = "piston-shaders_graphics2d"
@@ -1146,9 +1146,9 @@ dependencies = [
 
 [[package]]
 name = "piston2d-gfx_graphics"
-version = "0.68.0"
+version = "0.70.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d2bb42119a3bd2ac5507f6667ad768b4711665386397beca0083c2d279037092"
+checksum = "e99f0b10722f4ceb4c74c435cfa33d1382d3824ea3c690396d94f409cc1f1c9a"
 dependencies = [
  "draw_state",
  "gfx",
@@ -1160,9 +1160,9 @@ dependencies = [
 
 [[package]]
 name = "piston2d-graphics"
-version = "0.36.0"
+version = "0.37.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b7c7c36f6df5e0473d3ca3dd56a27acd75372903fcad1c647594f8c91ce1ff3"
+checksum = "bed0b4ea49db58337ec99d3e5e5bd6db3ae2f736b3f586e33428f92647113f70"
 dependencies = [
  "fnv",
  "interpolation",
@@ -1175,9 +1175,9 @@ dependencies = [
 
 [[package]]
 name = "piston_window"
-version = "0.110.0"
+version = "0.113.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c3c120f5dfb3f05971eef828e05791a813d76b38217a718d493f3d53245c2e24"
+checksum = "75ddb469b647f4d923cf178590334e45449cd51c6aaf224ba621438f19a6aa84"
 dependencies = [
  "gfx",
  "gfx_device_gl",
@@ -1191,9 +1191,9 @@ dependencies = [
 
 [[package]]
 name = "pistoncore-event_loop"
-version = "0.51.0"
+version = "0.52.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "97dccc7954ffce5bc9f8d2d3c50c14bd55decfbf6e340d76b6f387af45b361be"
+checksum = "c1afc1c7b1bd1c673ffa0a0651f2d114e68a3cb5db0ba736d8227c4d68783b02"
 dependencies = [
  "pistoncore-input",
  "pistoncore-window",
@@ -1201,7 +1201,8 @@ dependencies = [
 
 [[package]]
 name = "pistoncore-glutin_window"
-version = "0.65.0"
+version = "0.66.0"
+source = "git+https://github.com/adumbidiot/glutin_window?branch=from-raw#4981f0a52a3f2394bc903530635557214f7c01ea"
 dependencies = [
  "gl",
  "glutin",
@@ -1224,9 +1225,9 @@ dependencies = [
 
 [[package]]
 name = "pistoncore-window"
-version = "0.46.0"
+version = "0.47.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c196a99d2f9f01701db46cc7c2ab3130244189553e4ed8d40d2b59fb4b77f4a8"
+checksum = "bb4932383d894231cdb3fcb0d26607c63b153b808b5621d911df6b929dd53b32"
 dependencies = [
  "piston-graphics_api_version",
  "pistoncore-input",
@@ -1261,9 +1262,9 @@ dependencies = [
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.21"
+version = "1.0.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "36e28516df94f3dd551a587da5357459d9b36d945a7c37c3557928c1c2ff2a2c"
+checksum = "51ef7cd2518ead700af67bf9d1a658d90b6037d77110fd9c0445429d0ba1c6c9"
 dependencies = [
  "unicode-xid 0.2.1",
 ]
@@ -1289,7 +1290,7 @@ version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "aa563d17ecb180e500da1cfd2b028310ac758de548efdd203e18f283af693f37"
 dependencies = [
- "proc-macro2 1.0.21",
+ "proc-macro2 1.0.23",
 ]
 
 [[package]]
@@ -1453,16 +1454,16 @@ version = "1.0.116"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f630a6370fd8e457873b4bd2ffdae75408bc291ba72be773772a4c2a065d9ae8"
 dependencies = [
- "proc-macro2 1.0.21",
+ "proc-macro2 1.0.23",
  "quote 1.0.7",
  "syn",
 ]
 
 [[package]]
 name = "shader_version"
-version = "0.6.0"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "478e783fb7533629e19120ca01246884f8effff5f4d20ce81d34c7c47a2866fa"
+checksum = "dfadbf7574784ee97f062ace17e1008fb5e7f46dd714b7dd46baf6efebd30e26"
 dependencies = [
  "piston-graphics_api_version",
 ]
@@ -1595,11 +1596,11 @@ checksum = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
 
 [[package]]
 name = "syn"
-version = "1.0.41"
+version = "1.0.42"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6690e3e9f692504b941dc6c3b188fd28df054f7fb8469ab40680df52fdcc842b"
+checksum = "9c51d92969d209b54a98397e1b91c8ae82d8c87a7bb87df0b29aa2ad81454228"
 dependencies = [
- "proc-macro2 1.0.21",
+ "proc-macro2 1.0.23",
  "quote 1.0.7",
  "unicode-xid 0.2.1",
 ]
@@ -1637,7 +1638,7 @@ version = "1.0.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bd80fc12f73063ac132ac92aceea36734f04a1d93c1240c6944e23a3b8841793"
 dependencies = [
- "proc-macro2 1.0.21",
+ "proc-macro2 1.0.23",
  "quote 1.0.7",
  "syn",
 ]
