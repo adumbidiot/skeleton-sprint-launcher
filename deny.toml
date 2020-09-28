@@ -93,7 +93,9 @@ unknown-registry = "deny"
 unknown-git = "deny"
 allow-registry = [ "https://github.com/rust-lang/crates.io-index" ]
 allow-git = [
-    "https://github.com/PistonDevelopers/conrod",
+    # "https://github.com/PistonDevelopers/conrod",
+    "https://github.com/adumbidiot/conrod",
     "https://github.com/Thinkofname/steamworks-rs",
-    # "https://github.com/adumbidiot/steamworks-rs"
+    # "https://github.com/adumbidiot/steamworks-rs",
+    "https://github.com/adumbidiot/glutin_window"
 ]

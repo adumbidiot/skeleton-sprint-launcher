@@ -104,7 +104,7 @@ fn make_piston_window(icon: Icon) -> Result<PistonWindow, Box<dyn StdError>> {
         .with_window_icon(Some(icon))
         .with_multitouch();
 
-    let glutin_window = GlutinWindow::from_glutin(events_loop, window_builder, &window_settings)?;
+    let glutin_window = GlutinWindow::from_raw(&window_settings, events_loop, window_builder)?;
     let mut window = PistonWindow::new(OpenGL::V3_2, samples, glutin_window);
 
     // Set eventloop updates
