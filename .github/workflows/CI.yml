@@ -13,8 +13,10 @@ jobs:
     name: Lint
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
           components: rustfmt, clippy 
@@ -25,25 +27,22 @@ jobs:
           repository: adumbidiot/private-steamworks-sdk
           token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
           path: steamworks-sdk
-      - name: check rustfmt
+      - name: Rustfmt
         uses: actions-rs/cargo@v1
         with:
           command: fmt
           args: '-- --check --color always'
-      - name: cargo fetch
+      - name: Fetch
         uses: actions-rs/cargo@v1
         with:
           command: fetch
-      - name: cargo clippy
+      - name: Clippy
         uses: actions-rs/cargo@v1
         with:
           command: clippy
           args: '--tests -- -D warnings'
-  cargo-deny:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: EmbarkStudios/cargo-deny-action@v1
+      - name: Deny
+        uses: EmbarkStudios/cargo-deny-action@v1
 # TODO: Figure out automatic building with steamworks
 #  build:
 #    runs-on: ubuntu-latest
