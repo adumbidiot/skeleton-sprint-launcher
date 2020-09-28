@@ -49,6 +49,10 @@ jobs:
         with:
           command: clippy
           args: '--tests -- -D warnings'
+  deny:
+    name: Deny
+    runs-on: ubuntu-latest
+    steps: 
       - name: Deny
         uses: EmbarkStudios/cargo-deny-action@v1
   build:
