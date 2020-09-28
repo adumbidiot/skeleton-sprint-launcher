@@ -6,17 +6,25 @@ name: Rust
   pull_request:
     branches:
       - master
+env:
+    STEAM_SDK_LOCATION: ./steamworks-sdk
 jobs:
   lint:
     name: Lint
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
           components: rustfmt, clippy 
           override: true
+      - name: Checkout private tools
+        uses: actions/checkout@v2
+        with:
+          repository: adumbidiot/private-steamworks-sdk
+          token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
+          path: steamworks-sdk
       - name: check rustfmt
         uses: actions-rs/cargo@v1
         with:
