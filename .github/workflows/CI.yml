@@ -7,7 +7,7 @@ name: Rust
     branches:
       - master
 env:
-    STEAM_SDK_LOCATION: ./steamworks-sdk
+    STEAM_SDK_LOCATION: ./steamworks-sdk/steamworks_sdk_148a/sdk
 jobs:
   lint:
     name: Lint
@@ -19,7 +19,7 @@ jobs:
           toolchain: nightly
           components: rustfmt, clippy 
           override: true
-      - name: Checkout private tools
+      - name: Checkout Private Steamworks SDK
         uses: actions/checkout@v2
         with:
           repository: adumbidiot/private-steamworks-sdk
