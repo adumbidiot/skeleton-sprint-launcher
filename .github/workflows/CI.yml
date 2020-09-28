@@ -54,24 +54,24 @@ jobs:
   build:
     name: Build
     runs-on: windows-latest
-      steps:
-       - name: Checkout
-         uses: actions/checkout@v2
-       - name: Checkout Private Steamworks SDK
-        uses: actions/checkout@v2
-        with:
-          repository: adumbidiot/private-steamworks-sdk
-          token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
-          path: steamworks-sdk
-       - name: Install Scoop
-         run: |
-           iwr -useb get.scoop.sh | iex
-           echo "::add-path::$($HOME)/scoop/shims"
-       - name: Install LLVM
-         run: |
-           scoop install llvm
-           echo "::set-env name=LIBCLANG_PATH::$($HOME)/scoop/apps/llvm/current/bin"
-       - name: Build
-         run: cargo build --verbose
-       - name: Run Tests
-         run: cargo test --all --verbose
+    steps:
+     - name: Checkout
+       uses: actions/checkout@v2
+     - name: Checkout Private Steamworks SDK
+       uses: actions/checkout@v2
+       with:
+        repository: adumbidiot/private-steamworks-sdk
+        token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
+        path: steamworks-sdk
+     - name: Install Scoop
+       run: |
+         iwr -useb get.scoop.sh | iex
+         echo "::add-path::$($HOME)/scoop/shims"
+     - name: Install LLVM
+       run: |
+         scoop install llvm
+         echo "::set-env name=LIBCLANG_PATH::$($HOME)/scoop/apps/llvm/current/bin"
+     - name: Build
+       run: cargo build --verbose
+     - name: Run Tests
+       run: cargo test --all --verbose
