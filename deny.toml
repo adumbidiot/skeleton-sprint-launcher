@@ -11,7 +11,7 @@ unmaintained = "deny"
 notice = "deny"
 ignore = [
     # TODO: Investigate proper removal for stb_truetype
-    "RUSTSEC-2020-0020",
+    # "RUSTSEC-2020-0020",
 ]
 
 [licenses]
@@ -97,5 +97,6 @@ allow-git = [
     "https://github.com/adumbidiot/conrod",
     "https://github.com/Thinkofname/steamworks-rs",
     # "https://github.com/adumbidiot/steamworks-rs",
-    "https://github.com/adumbidiot/glutin_window"
+    "https://github.com/adumbidiot/glutin_window",
+    "https://github.com/adumbidiot/graphics",
 ]
