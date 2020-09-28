@@ -6,8 +6,6 @@ name: Rust
   pull_request:
     branches:
       - master
-env:
-    STEAM_SDK_LOCATION: ./steamworks-sdk/steamworks_sdk_148a/sdk
 jobs:
   lint:
     name: Lint
@@ -27,6 +25,7 @@ jobs:
           repository: adumbidiot/private-steamworks-sdk
           token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
           path: steamworks-sdk
+        run: echo "::set-env name=STEAM_SDK_LOCATION::$($GITHUB_WORKSPACE)/steamworks-sdk/steamworks_sdk_148a/sdk" 
       - name: Install Scoop
         run: |
             iwr -useb get.scoop.sh | iex
