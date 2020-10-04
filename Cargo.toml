@@ -30,11 +30,8 @@ winit = "0.19.5"
 
 [patch.crates-io]
 # They refer to different crate versions on crates io
-# conrod_core = { git = "https://github.com/PistonDevelopers/conrod", rev = "dc98949" }
-# conrod_piston = { git = "https://github.com/PistonDevelopers/conrod", rev = "dc98949" }
-# Patch to upgrade piston2d-graphics.
-conrod_core = { git = "https://github.com/adumbidiot/conrod", branch = "update-piston-graphics" }
-conrod_piston = { git = "https://github.com/adumbidiot/conrod", branch = "update-piston-graphics" }
+conrod_core = { git = "https://github.com/PistonDevelopers/conrod", rev = "31a08c83b957374a6ed365da5397da41cea6654d" }
+conrod_piston = { git = "https://github.com/PistonDevelopers/conrod", rev = "31a08c83b957374a6ed365da5397da41cea6654d" }
 
 # Patch for building from pre-existing window
 pistoncore-glutin_window = { git = "https://github.com/adumbidiot/glutin_window", branch = "from-raw" } 
