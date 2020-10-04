@@ -42,9 +42,6 @@ skip = [
     { name = "libloading", version = "0.5.2" },
     { name = "gl_generator", version = "0.13.1" },
     
-    # Blocked on conrod bumping num
-    { name = "num-rational", version = "0.2.4" },
-    
     # Blocked on png bumping miniz_oxide
     { name = "miniz_oxide", version = "0.3.7" },
     
@@ -79,8 +76,8 @@ unknown-registry = "deny"
 unknown-git = "deny"
 allow-registry = [ "https://github.com/rust-lang/crates.io-index" ]
 allow-git = [
-    "https://github.com/PistonDevelopers/conrod",
-    # "https://github.com/adumbidiot/conrod",
+    # "https://github.com/PistonDevelopers/conrod",
+    "https://github.com/adumbidiot/conrod",
     "https://github.com/Thinkofname/steamworks-rs",
     # "https://github.com/adumbidiot/steamworks-rs",
     "https://github.com/adumbidiot/glutin_window"
