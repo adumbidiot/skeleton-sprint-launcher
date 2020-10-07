@@ -6,11 +6,11 @@ edition = "2018"
 license = "MIT"
 
 [dependencies]
-conrod_core = "0.70.0"
-conrod_piston = "0.70.0"
+conrod_core = "0.71.0"
+conrod_piston = "0.71.0"
 glutin = "0.21.2"
 image = "0.23.10"
-libc = "0.2.78"
+libc = "0.2.79"
 parking_lot = "0.9.0"
 piston2d-graphics = "0.37.0"
 pistoncore-input = "1.0.0"
@@ -30,8 +30,11 @@ winit = "0.19.5"
 
 [patch.crates-io]
 # They refer to different crate versions on crates io
-conrod_core = { git = "https://github.com/PistonDevelopers/conrod", rev = "31a08c83b957374a6ed365da5397da41cea6654d" }
-conrod_piston = { git = "https://github.com/PistonDevelopers/conrod", rev = "31a08c83b957374a6ed365da5397da41cea6654d" }
+# conrod_core = { git = "https://github.com/PistonDevelopers/conrod", rev = "31a08c83b957374a6ed365da5397da41cea6654d" }
+# conrod_piston = { git = "https://github.com/PistonDevelopers/conrod", rev = "31a08c83b957374a6ed365da5397da41cea6654d" }
+# Update num to 0.3
+conrod_core = { git = "https://github.com/adumbidiot/conrod", branch = "update-num" }
+conrod_piston = { git = "https://github.com/adumbidiot/conrod", branch = "update-num" }
 
 # Patch for building from pre-existing window
 pistoncore-glutin_window = { git = "https://github.com/adumbidiot/glutin_window", branch = "from-raw" } 
