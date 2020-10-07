@@ -94,7 +94,7 @@ dependencies = [
  "addr2line",
  "cfg-if",
  "libc",
- "miniz_oxide 0.4.2",
+ "miniz_oxide 0.4.3",
  "object",
  "rustc-demangle",
 ]
@@ -251,8 +251,8 @@ checksum = "0dbbb57365263e881e805dc77d94697c9118fd94d8da011240555aa7b23445bd"
 
 [[package]]
 name = "conrod_core"
-version = "0.70.0"
-source = "git+https://github.com/adumbidiot/conrod?branch=update-num#46df2aac758e39b5818896bfd43106ce3df5b4ac"
+version = "0.71.0"
+source = "git+https://github.com/adumbidiot/conrod?branch=update-num#4fb369b976851e68d40dfe421cf5dfedd6d7b3c2"
 dependencies = [
  "conrod_derive",
  "copypasta",
@@ -266,8 +266,8 @@ dependencies = [
 
 [[package]]
 name = "conrod_derive"
-version = "0.70.0"
-source = "git+https://github.com/adumbidiot/conrod?branch=update-num#46df2aac758e39b5818896bfd43106ce3df5b4ac"
+version = "0.71.0"
+source = "git+https://github.com/adumbidiot/conrod?branch=update-num#4fb369b976851e68d40dfe421cf5dfedd6d7b3c2"
 dependencies = [
  "proc-macro2 1.0.24",
  "quote 1.0.7",
@@ -276,8 +276,8 @@ dependencies = [
 
 [[package]]
 name = "conrod_piston"
-version = "0.70.0"
-source = "git+https://github.com/adumbidiot/conrod?branch=update-num#46df2aac758e39b5818896bfd43106ce3df5b4ac"
+version = "0.71.0"
+source = "git+https://github.com/adumbidiot/conrod?branch=update-num#4fb369b976851e68d40dfe421cf5dfedd6d7b3c2"
 dependencies = [
  "conrod_core",
  "piston2d-graphics",
@@ -660,9 +660,9 @@ dependencies = [
 
 [[package]]
 name = "hermit-abi"
-version = "0.1.16"
+version = "0.1.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4c30f6d0bc6b00693347368a67d41b58f2fb851215ff1da49e90fe2c5c667151"
+checksum = "5aca5565f760fb5b220e499d72710ed156fdb74e631659e99377d9ebfbd13ae8"
 dependencies = [
  "libc",
 ]
@@ -853,9 +853,9 @@ dependencies = [
 
 [[package]]
 name = "miniz_oxide"
-version = "0.4.2"
+version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c60c0dfe32c10b43a144bad8fc83538c52f58302c92300ea7ec7bf7b38d5a7b9"
+checksum = "0f2d26ec3309788e423cfbf68ad1800f061638098d76a83681af979dc4eda19d"
 dependencies = [
  "adler",
  "autocfg",
@@ -1347,9 +1347,9 @@ checksum = "26412eb97c6b088a6997e05f69403a802a92d520de2f8e63c2b65f9e0f47c4e8"
 
 [[package]]
 name = "rustc-demangle"
-version = "0.1.16"
+version = "0.1.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4c691c0e608126e00913e33f0ccf3727d5fc84573623b8d65b2df340b5201783"
+checksum = "b2610b7f643d18c87dff3b489950269617e6601a51f1f05aa5daefee36f64f0b"
 
 [[package]]
 name = "rustc-hash"
@@ -1613,18 +1613,18 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "1.0.20"
+version = "1.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7dfdd070ccd8ccb78f4ad66bf1982dc37f620ef696c6b5028fe2ed83dd3d0d08"
+checksum = "318234ffa22e0920fe9a40d7b8369b5f649d490980cf7aadcf1eb91594869b42"
 dependencies = [
  "thiserror-impl",
 ]
 
 [[package]]
 name = "thiserror-impl"
-version = "1.0.20"
+version = "1.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bd80fc12f73063ac132ac92aceea36734f04a1d93c1240c6944e23a3b8841793"
+checksum = "cae2447b6282786c3493999f40a9be2a6ad20cb8bd268b0a0dbf5a065535c0ab"
 dependencies = [
  "proc-macro2 1.0.24",
  "quote 1.0.7",
