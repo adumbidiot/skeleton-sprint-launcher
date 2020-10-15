@@ -42,3 +42,6 @@ pistoncore-glutin_window = { git = "https://github.com/adumbidiot/glutin_window"
 # Patch to make steamworks callbacks FnOnce + remove dependency on Failure.
 steamworks = { git = "https://github.com/Thinkofname/steamworks-rs", rev = "6ffbe434308d33d17cae219536800f354061e7ca" }
 steamworks-sys = { git = "https://github.com/Thinkofname/steamworks-rs", rev = "6ffbe434308d33d17cae219536800f354061e7ca" }
+
+# Patch for removing stb_truetype
+piston2d-graphics = { git = "https://github.com/adumbidiot/graphics", branch = "update-rusttype" }
