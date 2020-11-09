@@ -1158,9 +1158,9 @@ dependencies = [
 
 [[package]]
 name = "piston_window"
-version = "0.113.0"
+version = "0.114.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75ddb469b647f4d923cf178590334e45449cd51c6aaf224ba621438f19a6aa84"
+checksum = "2db7f49cc383b3669da773c7f5d73876503bbeea56a1f599b1e5e0db412aec7e"
 dependencies = [
  "gfx",
  "gfx_device_gl",
@@ -1168,7 +1168,7 @@ dependencies = [
  "piston-texture",
  "piston2d-gfx_graphics",
  "piston2d-graphics",
- "pistoncore-glutin_window",
+ "pistoncore-glutin_window 0.67.0",
  "shader_version",
 ]
 
@@ -1186,6 +1186,19 @@ dependencies = [
 name = "pistoncore-glutin_window"
 version = "0.66.0"
 source = "git+https://github.com/adumbidiot/glutin_window?branch=from-raw#4981f0a52a3f2394bc903530635557214f7c01ea"
+dependencies = [
+ "gl",
+ "glutin",
+ "pistoncore-input",
+ "pistoncore-window",
+ "shader_version",
+]
+
+[[package]]
+name = "pistoncore-glutin_window"
+version = "0.67.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4affa7d466dfe757fb7bcd882b9c07dbbb31e5ef07091448c98dceb2ebbf5f87"
 dependencies = [
  "gl",
  "glutin",
@@ -1479,7 +1492,7 @@ dependencies = [
  "parking_lot",
  "piston2d-graphics",
  "piston_window",
- "pistoncore-glutin_window",
+ "pistoncore-glutin_window 0.66.0",
  "pistoncore-input",
  "serde",
  "steamworks",
