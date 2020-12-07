@@ -205,7 +205,7 @@ impl SteamWorkshopSyncState {
     }
 
     pub fn is_syncing(&self) -> bool {
-        matches!(self, Self::Starting | Self::InProgress(_,_))
+        matches!(self, Self::Starting | Self::InProgress(_, _))
     }
 }
 
