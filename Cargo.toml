@@ -38,7 +38,7 @@ conrod_piston = { git = "https://github.com/adumbidiot/conrod", branch = "update
 
 # Patch for building from pre-existing window
 # pistoncore-glutin_window = { git = "https://github.com/adumbidiot/glutin_window", branch = "from-raw" } 
-pistoncore-glutin_window = { git = "https://github.com/pistondevelopers/glutin_window", rev = "692b10ed14430f8fd860dd5c759b5f8a1957aebb" }
+# pistoncore-glutin_window = { git = "https://github.com/pistondevelopers/glutin_window", rev = "692b10ed14430f8fd860dd5c759b5f8a1957aebb" }
 
 # Patch to make steamworks callbacks FnOnce + remove dependency on Failure.
 steamworks = { git = "https://github.com/Thinkofname/steamworks-rs", rev = "6ffbe434308d33d17cae219536800f354061e7ca" }
