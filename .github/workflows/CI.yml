@@ -26,15 +26,15 @@ jobs:
           token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
           path: steamworks-sdk
       - name: Set Steamworks SDK Location
-        run: echo "STEAM_SDK_LOCATION=${env:GITHUB_WORKSPACE}/steamworks-sdk/steamworks_sdk_148a/sdk >> $GITHUB_ENV" 
+        run: echo "STEAM_SDK_LOCATION=${env:GITHUB_WORKSPACE}/steamworks-sdk/steamworks_sdk_148a/sdk" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Install Scoop
         run: |
             iwr -useb get.scoop.sh | iex
-            echo "$($HOME)/scoop/shims >> $GITHUB_PATH"
+            echo "$($HOME)/scoop/shims" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       - name: Install LLVM
         run: |
             scoop install llvm
-            echo "LIBCLANG_PATH=$($HOME)/scoop/apps/llvm/current/bin >> $GITHUB_ENV"
+            echo "LIBCLANG_PATH=$($HOME)/scoop/apps/llvm/current/bin" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Rustfmt
         uses: actions-rs/cargo@v1
         with:
@@ -70,15 +70,15 @@ jobs:
         token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
         path: steamworks-sdk
      - name: Set Steamworks SDK Location
-       run: echo "STEAM_SDK_LOCATION::${env:GITHUB_WORKSPACE}/steamworks-sdk/steamworks_sdk_148a/sdk >> $GITHUB_ENV" 
+       run: echo "STEAM_SDK_LOCATION=${env:GITHUB_WORKSPACE}/steamworks-sdk/steamworks_sdk_148a/sdk" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
      - name: Install Scoop
        run: |
          iwr -useb get.scoop.sh | iex
-         echo "$($HOME)/scoop/shims >> $GITHUB_PATH"
+         echo "$($HOME)/scoop/shims" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
      - name: Install LLVM
        run: |
          scoop install llvm
-         echo "name=LIBCLANG_PATH::$($HOME)/scoop/apps/llvm/current/bin >> $GITHUB_ENV"
+         echo "LIBCLANG_PATH=$($HOME)/scoop/apps/llvm/current/bin" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
      - name: Build
        run: cargo build --verbose
      - name: Run Tests
