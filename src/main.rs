@@ -71,7 +71,7 @@ fn load_icon(icon_image_bytes: &[u8]) -> Result<Icon, AssetError> {
     let icon_image = image::load_from_memory(icon_image_bytes)?;
     let icon_width = icon_image.width();
     let icon_height = icon_image.height();
-    let icon_rgba_buffer = icon_image.into_rgba().into_vec();
+    let icon_rgba_buffer = icon_image.into_rgba8().into_vec();
     let icon = Icon::from_rgba(icon_rgba_buffer, icon_width, icon_height)?;
     Ok(icon)
 }
@@ -131,7 +131,7 @@ fn main() {
     };
 
     let cover_image = match image::load_from_memory(COVER_IMAGE_DATA) {
-        Ok(cover_image) => cover_image.into_rgba(),
+        Ok(cover_image) => cover_image.into_rgba8(),
         Err(e) => {
             eprintln!("Failed to load cover image: {}", e);
             return;

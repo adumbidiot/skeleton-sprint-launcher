@@ -14,7 +14,7 @@ libc = "0.2.80"
 parking_lot = "0.9.0"
 piston2d-graphics = "0.39.0"
 pistoncore-input = "1.0.0"
-piston_window = "0.113.0"
+piston_window = "0.116.0"
 serde = { version = "1.0.117", features = [ "derive" ] }
 steamworks = "0.6.1"
 steamworks-sys = "0.6.1"
@@ -25,19 +25,20 @@ toml = "0.5.7"
 # fs is needed for file operations in futures
 tokio = { version = "0.2.22", features = [ "rt-threaded", "sync", "fs" ] } 
 
-pistoncore-glutin_window = "0.66.0"
+pistoncore-glutin_window = "0.67.1"
 winit = "0.19.5"
 
 [patch.crates-io]
 # They refer to different crate versions on crates io
 # conrod_core = { git = "https://github.com/PistonDevelopers/conrod", rev = "31a08c83b957374a6ed365da5397da41cea6654d" }
 # conrod_piston = { git = "https://github.com/PistonDevelopers/conrod", rev = "31a08c83b957374a6ed365da5397da41cea6654d" }
-# Update num to 0.3
-conrod_core = { git = "https://github.com/adumbidiot/conrod", branch = "update-num" }
-conrod_piston = { git = "https://github.com/adumbidiot/conrod", branch = "update-num" }
+# Update pistoncore-glutin_window to 0.67.1
+conrod_core = { git = "https://github.com/adumbidiot/conrod", branch = "update-glutin-window" }
+conrod_piston = { git = "https://github.com/adumbidiot/conrod", branch = "update-glutin-window" }
 
 # Patch for building from pre-existing window
-pistoncore-glutin_window = { git = "https://github.com/adumbidiot/glutin_window", branch = "from-raw" } 
+# pistoncore-glutin_window = { git = "https://github.com/adumbidiot/glutin_window", branch = "from-raw" } 
+pistoncore-glutin_window = { git = "https://github.com/pistondevelopers/glutin_window", rev = "692b10ed14430f8fd860dd5c759b5f8a1957aebb" }
 
 # Patch to make steamworks callbacks FnOnce + remove dependency on Failure.
 steamworks = { git = "https://github.com/Thinkofname/steamworks-rs", rev = "6ffbe434308d33d17cae219536800f354061e7ca" }
