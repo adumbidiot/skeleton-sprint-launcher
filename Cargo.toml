@@ -26,7 +26,7 @@ toml = "0.5.7"
 tokio = { version = "0.2.24", features = [ "rt-threaded", "sync", "fs" ] } 
 
 pistoncore-glutin_window = "0.67.2"
-winit = "0.19.5"
+winit = "0.24.0"
 
 [patch.crates-io]
 # They refer to different crate versions on crates io
