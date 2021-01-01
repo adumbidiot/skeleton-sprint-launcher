@@ -18,7 +18,7 @@ piston_window = "0.116.0"
 serde = { version = "1.0.117", features = [ "derive" ] }
 steamworks = "0.6.1"
 steamworks-sys = "0.6.1"
-toml = "0.5.7"
+toml = "0.5.8"
 
 # We want threaded to queue tasks on a background threadpool
 # We also want sync for oneshot support to integrate steamworks and tokio
