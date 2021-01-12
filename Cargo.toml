@@ -15,7 +15,7 @@ parking_lot = "0.9.0"
 piston2d-graphics = "0.39.0"
 pistoncore-input = "1.0.0"
 piston_window = "0.116.0"
-serde = { version = "1.0.117", features = [ "derive" ] }
+serde = { version = "1.0.119", features = [ "derive" ] }
 steamworks = "0.6.1"
 steamworks-sys = "0.6.1"
 toml = "0.5.8"
