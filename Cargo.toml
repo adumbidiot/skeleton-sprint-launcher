@@ -25,7 +25,7 @@ toml = "0.5.8"
 # fs is needed for file operations in futures
 tokio = { version = "0.2.24", features = [ "rt-threaded", "sync", "fs" ] } 
 
-pistoncore-glutin_window = "0.67.2"
+pistoncore-glutin_window = "0.68.0"
 winit = "0.19.5"
 
 [patch.crates-io]
