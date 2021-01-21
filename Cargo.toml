@@ -8,7 +8,7 @@ license = "MIT"
 [dependencies]
 conrod_core = "0.71.0"
 conrod_piston = "0.71.0"
-glutin = "0.21.2"
+glutin = "0.26.0"
 image = "0.23.11"
 libc = "0.2.82"
 parking_lot = "0.9.0"
