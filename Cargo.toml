@@ -23,7 +23,7 @@ toml = "0.5.8"
 # We want threaded to queue tasks on a background threadpool
 # We also want sync for oneshot support to integrate steamworks and tokio
 # fs is needed for file operations in futures
-tokio = { version = "0.2.24", features = [ "rt-threaded", "sync", "fs" ] } 
+tokio = { version = "0.2.25", features = [ "rt-threaded", "sync", "fs" ] } 
 
 pistoncore-glutin_window = "0.67.2"
 winit = "0.19.5"
