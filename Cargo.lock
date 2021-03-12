@@ -1556,9 +1556,9 @@ dependencies = [
 
 [[package]]
 name = "piston_window"
-version = "0.116.0"
+version = "0.117.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1bcf267acee956e14e17ff9896ca4a31dc42606e626a58ef1bea0acceb43a003"
+checksum = "0971ff2b6a8e3b587fffeced23d827b115924db10f97533449eafe457d7e7793"
 dependencies = [
  "gfx",
  "gfx_device_gl",
