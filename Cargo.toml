@@ -9,16 +9,16 @@ license = "MIT"
 conrod_core = "0.71.0"
 conrod_piston = "0.71.0"
 glutin = "0.26.0"
-image = "0.23.11"
-libc = "0.2.80"
-parking_lot = "0.11.0"
+image = "0.23.14"
+libc = "0.2.88"
+parking_lot = "0.11.1"
 piston2d-graphics = "0.39.0"
 pistoncore-input = "1.0.0"
 piston_window = { version = "0.116.0", default-features = false }
-serde = { version = "1.0.117", features = [ "derive" ] }
+serde = { version = "1.0.124", features = [ "derive" ] }
 steamworks = "0.6.1"
 steamworks-sys = "0.6.1"
-toml = "0.5.7"
+toml = "0.5.8"
 
 # We want threaded to queue tasks on a background threadpool
 # We also want sync for oneshot support to integrate steamworks and tokio
