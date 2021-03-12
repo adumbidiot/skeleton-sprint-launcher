@@ -32,7 +32,7 @@ impl std::fmt::Display for WorkshopQueryError {
 
 impl StdError for WorkshopQueryError {}
 
-pub struct UGCQueryBuilder<'a> {
+pub struct UgcQueryBuilder<'a> {
     client: &'a steamworks::Client,
     account_id: steamworks::AccountId,
     user_list: UserList,
@@ -42,7 +42,7 @@ pub struct UGCQueryBuilder<'a> {
     page_number: u32,
 }
 
-impl<'a> UGCQueryBuilder<'a> {
+impl<'a> UgcQueryBuilder<'a> {
     /// Creates a new UGCQueryBuilder.
     pub fn new(client: &'a steamworks::Client) -> Self {
         Self {

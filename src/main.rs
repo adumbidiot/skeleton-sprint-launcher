@@ -9,7 +9,10 @@ use conrod_core::{
     Theme,
     UiBuilder,
 };
-use glutin::Icon;
+use glutin::window::{
+    BadIcon,
+    Icon,
+};
 use glutin_window::GlutinWindow;
 use image::GenericImageView;
 use piston_window::{
@@ -26,7 +29,6 @@ use piston_window::{
     WindowSettings,
 };
 use std::error::Error as StdError;
-use winit::BadIcon;
 
 const COVER_IMAGE_DATA: &[u8] = include_bytes!("../assets/cover.png");
 const FONT_DATA: &[u8] = include_bytes!("../assets/fonts/bolonewt/bolonewt.ttf");
@@ -78,7 +80,7 @@ fn load_icon(icon_image_bytes: &[u8]) -> Result<Icon, AssetError> {
 
 /// Makes a PistonWindow
 /// TODO: Add more configurable options and make more generic
-fn make_piston_window(icon: Icon) -> Result<PistonWindow, Box<dyn StdError>> {
+fn make_piston_window(icon: Icon) -> Result<PistonWindow<GlutinWindow>, Box<dyn StdError>> {
     let title = WINDOW_TITLE;
     let width = WINDOW_WIDTH;
     let height = WINDOW_HEIGHT;
@@ -95,16 +97,15 @@ fn make_piston_window(icon: Icon) -> Result<PistonWindow, Box<dyn StdError>> {
         .vsync(use_vsync)
         .samples(num_samples);
 
-    let events_loop = glutin::EventsLoop::new();
-    let window_builder = glutin::WindowBuilder::new()
+    let event_loop = glutin::event_loop::EventLoop::<glutin_window::UserEvent>::with_user_event();
+    let window_builder = glutin::window::WindowBuilder::new()
         .with_resizable(resizable)
         .with_title(title)
-        .with_visibility(is_visible)
-        .with_dimensions((width, height).into())
-        .with_window_icon(Some(icon))
-        .with_multitouch();
+        .with_visible(is_visible)
+        .with_inner_size(glutin::dpi::LogicalSize::new(width, height))
+        .with_window_icon(Some(icon));
 
-    let glutin_window = GlutinWindow::from_raw(&window_settings, events_loop, window_builder)?;
+    let glutin_window = GlutinWindow::from_raw(&window_settings, event_loop, window_builder)?;
     let mut window = PistonWindow::new(OpenGL::V3_2, samples, glutin_window);
 
     // Set eventloop updates
@@ -235,7 +236,7 @@ fn main() {
 
             if !first_draw && !opened_window {
                 let window = window.window.ctx.window();
-                window.show();
+                window.set_visible(true);
                 opened_window = true;
             }
         });

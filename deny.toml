@@ -15,6 +15,14 @@ ignore = [
     
     # Might be maintained by BurntSushi, albeit passively.
     "RUSTSEC-2020-0077",
+    
+    # We don't build on linux, so this is fine.
+    # TODO: Find way to remove xcb from dependency tree.
+    "RUSTSEC-2020-0097",
+    "RUSTSEC-2021-0019",
+    
+    # TODO: Find way to remove old mio from winit?
+    "RUSTSEC-2020-0016",
 ]
 
 [licenses]
@@ -32,13 +40,7 @@ multiple-versions = "deny"
 highlight = "all"
 skip = [
     # Blocked on glutin being bumped, which is blocked on winit fixing high cpu usage on certain platforms. Dammit winit.
-    { name = "wayland-sys", version = "0.21.13" },
-    { name = "wayland-scanner", version = "0.21.13" },
-    { name = "wayland-protocols", version = "0.21.13" },
-    { name = "wayland-commons", version = "0.21.13" },
-    { name = "wayland-client", version = "0.21.13" },
     { name = "unicode-xid", version = "0.1.0" },
-    { name = "smithay-client-toolkit", version = "0.4.6" },
     { name = "rusttype", version = "0.7.9" },
     { name = "quote", version = "0.6.13" },
     { name = "proc-macro2", version = "0.4.30" },
@@ -47,9 +49,6 @@ skip = [
     
     # Blocked on png bumping miniz_oxide
     { name = "miniz_oxide", version = "0.3.7" },
-    
-    # Blocked on pistoncore-glutin_window bumping gl
-    { name = "gl_generator", version = "0.10.0" },
     
     # Blocked on updating conrod_core and winit
     { name = "rusttype", version = "0.9.2" },
@@ -62,6 +61,35 @@ skip = [
     { name = "crossbeam-epoch", version = "0.8.2" },
     { name = "crossbeam-utils", version = "0.7.2" },
     { name = "memoffset", version = "0.5.6" },
+    
+    # Blocked on removing old mio from winit
+    { name = "winapi", version = "0.2.8" },
+    
+    # Blocked on updating copypasta in conrod 
+    { name = "wayland-sys", version = "0.23.6" },
+    { name = "wayland-scanner", version = "0.23.6" },
+    { name = "wayland-protocols", version = "0.23.6" },
+    { name = "wayland-commons", version = "0.23.6" },
+    { name = "wayland-client", version = "0.23.6" },
+    { name = "smithay-client-toolkit", version = "0.6.6" },
+    { name = "andrew", version = "0.2.1" },
+    { name = "nix", version = "0.14.1" },
+    
+    # Blocked on updating bindgen in steamworks-rs
+    { name = "nom", version = "5.1.2" },
+    
+    # Blocked on winit updating nix to 0.20.x
+    { name = "nix", version = "0.18.0" },
+    
+    # Blocked on smithay-client-toolkit updating dlib to 0.5.x
+    { name = "dlib", version = "0.5.0" },
+    { name = "libloading", version = "0.6.7" },
+    
+    # Blocked on winit and glutin actually agreeing on something
+    { name = "cocoa", version = "0.23.0" },
+    { name = "core-foundation", version = "0.7.0" },
+    { name = "core-graphics", version = "0.19.2" },
+    { name = "core-foundation-sys", version = "0.7.0" },
 ]
 
 # Mostly soundness denies since the advisory lacks a section for soundess bugs
@@ -95,5 +123,5 @@ allow-git = [
     "https://github.com/adumbidiot/conrod",
     "https://github.com/Thinkofname/steamworks-rs",
     # "https://github.com/adumbidiot/steamworks-rs",
-    # "https://github.com/adumbidiot/glutin_window"
+    "https://github.com/nathaniel-daniel/glutin_window",
 ]

@@ -2,7 +2,7 @@ use crate::{
     config::Config,
     steamworks_util::{
         OneShotRecvError,
-        UGCQueryBuilder,
+        UgcQueryBuilder,
     },
 };
 use conrod_core::{
@@ -227,7 +227,7 @@ impl App {
         // For now, lets make steamworks necessary.
         let (steam_client, steam_single_client) = steamworks::Client::init()?;
 
-        let ugc_query_future = UGCQueryBuilder::new(&steam_client)
+        let ugc_query_future = UgcQueryBuilder::new(&steam_client)
             .user_list(steamworks::UserList::Subscribed)
             .send(|res| res.map(|res| res.iter().collect::<Vec<_>>()))?;
 
@@ -254,6 +254,7 @@ impl App {
             )
             .await
             {
+                eprintln!("Sync Failed: {}", e);
                 steam_workshop_sync_state_clone.lock().set_fail(e);
             }
         });
