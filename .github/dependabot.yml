@@ -1,0 +1,44 @@
+version: 2
+updates:
+- package-ecosystem: cargo
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: piston_window
+    versions:
+    - 0.119.0
+  - dependency-name: serde
+    versions:
+    - 1.0.123
+    - 1.0.124
+    - 1.0.125
+  - dependency-name: libc
+    versions:
+    - 0.2.84
+    - 0.2.85
+    - 0.2.86
+    - 0.2.87
+    - 0.2.88
+    - 0.2.89
+  - dependency-name: pistoncore-glutin_window
+    versions:
+    - 0.68.0
+    - 0.68.1
+  - dependency-name: image
+    versions:
+    - 0.23.13
+    - 0.23.14
+  - dependency-name: tokio
+    versions:
+    - 0.2.25
+  - dependency-name: parking_lot
+    versions:
+    - 0.11.1
+  - dependency-name: glutin
+    versions:
+    - 0.26.0
+  - dependency-name: winit
+    versions:
+    - 0.24.0
