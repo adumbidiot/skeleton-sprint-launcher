@@ -12,7 +12,7 @@ glutin = "0.26.0"
 image = "0.23.14"
 libc = "0.2.94"
 parking_lot = "0.11.1"
-piston2d-graphics = "0.39.0"
+piston2d-graphics = "0.40.0"
 pistoncore-input = "1.0.0"
 piston_window = { version = "0.118.0", default-features = false }
 serde = { version = "1.0.125", features = [ "derive" ] }

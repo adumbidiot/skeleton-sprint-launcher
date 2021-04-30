@@ -316,7 +316,7 @@ version = "0.71.0"
 source = "git+https://github.com/adumbidiot/conrod?branch=update-glutin-window#d5bf0210ebfeb78c11caf980b37dd0a777f31734"
 dependencies = [
  "conrod_core",
- "piston2d-graphics",
+ "piston2d-graphics 0.39.0",
  "pistoncore-input",
 ]
 
@@ -1535,7 +1535,7 @@ dependencies = [
  "gfx",
  "piston-gfx_texture",
  "piston-shaders_graphics2d",
- "piston2d-graphics",
+ "piston2d-graphics 0.39.0",
  "shader_version",
 ]
 
@@ -1555,6 +1555,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "piston2d-graphics"
+version = "0.40.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "beb104512055b3bf44fc3d8dad9af88abda16a468d048626ae9b49f634802c67"
+dependencies = [
+ "interpolation",
+ "piston-texture",
+ "piston-viewport",
+ "read_color",
+ "vecmath",
+]
+
+[[package]]
 name = "piston_window"
 version = "0.118.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1565,7 +1578,7 @@ dependencies = [
  "piston",
  "piston-texture",
  "piston2d-gfx_graphics",
- "piston2d-graphics",
+ "piston2d-graphics 0.39.0",
  "shader_version",
 ]
 
@@ -1872,7 +1885,7 @@ dependencies = [
  "image",
  "libc",
  "parking_lot",
- "piston2d-graphics",
+ "piston2d-graphics 0.40.0",
  "piston_window",
  "pistoncore-glutin_window",
  "pistoncore-input",
